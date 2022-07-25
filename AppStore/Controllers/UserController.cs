@@ -17,6 +17,19 @@ namespace AppStore.Controllers
             _context = context;
             _configuration = configuration;
         }
+
+        [HttpGet]
+        [Route("[controller]/getApp"), Authorize(Roles = "User")]
+        public async Task<IActionResult> GetApp(int id)
+        {
+            if (id == null || _context.AppList == null)
+            {
+                return NotFound();
+            }
+            var applist = await _context.AppList.FindAsync(id);
+            return Ok(applist);
+        }
+
         [HttpPost]
         [Route("[controller]/downloadApp"), Authorize(Roles = "User")]
         public async Task<ActionResult<AppModel>> NoofDownload([FromBody]AppModel appModel)
