@@ -51,7 +51,7 @@ namespace AppStore.Controllers
                 newDownload.No_of_Downloads = No_of_Downloads+1;
                 
                 _context.SaveChanges();
-                return Ok(UserName + "You are downloaded sucessfully");
+                return Ok("You are downloaded sucessfully");
             }
             else
             {
@@ -62,7 +62,7 @@ namespace AppStore.Controllers
         [Route("[controller]/Ratings"), Authorize(Roles = "User")]
         public async Task<ActionResult<AppModel>> Ratings([FromBody]AppModel appModel)
         {
-            var checkUserRole = _context.AppList.Where(x => x.AppName == appModel.AppName).SingleOrDefault();
+            var checkRatings = _context.AppList.Where(x => x.AppName == appModel.AppName).SingleOrDefault();
                 var TokenVariables = HttpContext.User;
             /* var Name = "";
              if (TokenVariables?.Claims != null)
@@ -74,8 +74,8 @@ namespace AppStore.Controllers
                  }
              }*/
             /*var userDetails = _context.AppList.Where(x => x.AppName == Name).SingleOrDefault();*/
-            var ratings = checkUserRole.Ratings;
-                checkUserRole.Ratings=(ratings+appModel.Ratings)/checkUserRole.No_of_Downloads;
+            var ratings = checkRatings.Ratings;
+                checkRatings.Ratings=(ratings+appModel.Ratings)/checkRatings.No_of_Downloads;
                 _context.SaveChanges();
                 return Ok("Updated the Ratings");
 
