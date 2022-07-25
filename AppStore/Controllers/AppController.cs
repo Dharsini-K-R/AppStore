@@ -64,7 +64,7 @@ namespace AppStore.Controllers
             }
         }
         [HttpGet]
-        [Route("[controller]/getuser"), Authorize(Roles = "Admin")]
+        [Route("[controller]/getApp"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetApp(int id)
         {
             if (id == null || _context.AppList == null)
